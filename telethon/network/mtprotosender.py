@@ -354,7 +354,7 @@ class MTProtoSender:
         self._reconnecting = False
 
         # Start with a clean state (and thus session ID) to avoid old msgs
-        self._state.reset()
+        # self._state.reset()
 
         retries = self._retries if self._auto_reconnect else 0
         for attempt in retry_range(retries):
