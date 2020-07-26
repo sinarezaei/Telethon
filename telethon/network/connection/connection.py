@@ -2,6 +2,7 @@ import abc
 import asyncio
 import socket
 import sys
+import traceback
 
 try:
     import ssl as ssl_mod
@@ -179,10 +180,10 @@ class Connection(abc.ABC):
                 break
             except Exception as e:
                 if isinstance(e, (IOError, asyncio.IncompleteReadError)):
-                    msg = 'The server closed the connection'
+                    msg = 'The server closed the connection - ' + str(e) + '\n' + traceback.format_exc()
                     self._log.info(msg)
                 elif isinstance(e, InvalidChecksumError):
-                    msg = 'The server response had an invalid checksum'
+                    msg = 'The server response had an invalid checksum - ' + str(e)
                     self._log.info(msg)
                 else:
                     msg = 'Unexpected exception in the receive loop'
