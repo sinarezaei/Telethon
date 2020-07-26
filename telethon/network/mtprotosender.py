@@ -459,7 +459,7 @@ class MTProtoSender:
             try:
                 body = await self._connection.recv()
             except IOError as e:
-                self._log.info('Connection closed while receiving data' + str(e) + '\n' + traceback.format_exc())
+                self._log.info('Connection closed while receiving data, returning ' + str(e) + '\n' + traceback.format_exc())
                 return
                 # raise e
                 # self._start_reconnect(e)
