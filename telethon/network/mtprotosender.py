@@ -355,7 +355,7 @@ class MTProtoSender:
         self._reconnecting = False
 
         # Start with a clean state (and thus session ID) to avoid old msgs
-        # self._state.reset()
+        self._state.reset()
 
         retries = self._retries if self._auto_reconnect else 0
         for attempt in retry_range(retries):
@@ -460,10 +460,10 @@ class MTProtoSender:
                 body = await self._connection.recv()
             except IOError as e:
                 self._log.info('Connection closed while receiving data, returning ' + str(e) + '\n' + traceback.format_exc())
-                return
+#                 return
                 # raise e
-                # self._start_reconnect(e)
-                # return
+                self._start_reconnect(e)
+                return
 
             try:
                 message = self._state.decrypt_message_data(body)
