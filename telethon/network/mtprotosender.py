@@ -1,6 +1,7 @@
 import asyncio
 import collections
 import struct
+import traceback
 
 from . import authenticator
 from ..extensions.messagepacker import MessagePacker
@@ -458,7 +459,7 @@ class MTProtoSender:
             try:
                 body = await self._connection.recv()
             except IOError as e:
-                self._log.info('Connection closed while receiving data')
+                self._log.info('Connection closed while receiving data' + str(e) + '\n' + traceback.format_exc())
                 self._start_reconnect(e)
                 return
 
